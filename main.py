@@ -68,6 +68,8 @@ def show_score(x, y):
 def game_over_text():
     over_text = over_font.render("GAME OVER!!!", True, (255, 255, 255))
     screen.blit(over_text, (180, 250))
+    play_again_text = font.render('Press "p" to play again', True, (255, 255, 255))
+    screen.blit(play_again_text, (240, 325))
 
 def player(x, y):
     screen.blit(playerImg, (x, y))
@@ -86,6 +88,13 @@ def iscollision(EnemyX, EnemyY, BulletX, BulletY):
         return True
     else:
         return False
+
+# Play again
+def play_again():
+    for i in range(num_of_enemies):
+        EnemyX[i] = random.randint(0, 800)
+        EnemyY[i] = random.randint(50, 150)
+        enemy(EnemyX[i], EnemyY[i], i)
 
 # Game loop
 running = True
@@ -133,7 +142,9 @@ while running:
                 EnemyY[j] = 2000
 
             game_over_text()
-            break
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_p:
+                   play_again()
 
         EnemyX[i] += EnemyX_change[i]
 
